@@ -1,12 +1,33 @@
-// app/components/CartClientPage.js
 'use client';
-
+import { useEffect, useState } from 'react';
 import { useCart } from '../context/CartContext';
 import Link from 'next/link';
 import { ShoppingCart, Minus, Plus, Trash2 } from 'lucide-react';
 
 export default function CartClientPage() {
-  const { cart, removeFromCart, updateQuantity, cartTotal } = useCart();
+  const { cart, removeFromCart, updateQuantity } = useCart();
+
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    if (cart.length === 0) return;
+
+    const fetchTotal = async () => {
+      try {
+        const res = await fetch('/api/cart/cartTotal');
+        const data = await res.json();
+        if (data.success) {
+          setTotal(data.total);
+        } else {
+          console.error('Failed to fetch total');
+        }
+      } catch (err) {
+        console.error('Error fetching total:', err);
+      }
+    };
+
+    fetchTotal();
+  }, [cart]);
 
   if (cart.length === 0) {
     return (
@@ -30,11 +51,11 @@ export default function CartClientPage() {
         <div className="lg:col-span-2 space-y-4">
           {cart.map(item => (
             <div key={item.id} className="bg-white rounded-xl shadow-sm p-6 flex gap-6">
-              <img src={item.image} alt={item.name} className="w-24 h-24 object-cover rounded-lg" />
+              <img src={item.image ? item.image : item.images[0]} alt={item.name} className="w-24 h-24 object-cover rounded-lg" />
               <div className="flex-1">
                 <h3 className="text-lg font-semibold text-gray-900 mb-1">{item.name}</h3>
                 <p className="text-gray-500 text-sm mb-3">{item.category}</p>
-                <p className="text-xl font-bold text-blue-600">${item.price.toFixed(2)}</p>
+                <p className="text-xl font-bold text-blue-600">₹{item.price.toFixed(2)}</p>
               </div>
               <div className="flex flex-col items-end justify-between">
                 <button onClick={() => removeFromCart(item.id)} className="text-red-500 hover:text-red-700 transition-colors">
@@ -59,7 +80,7 @@ export default function CartClientPage() {
             <div className="space-y-3 mb-6">
               <div className="flex justify-between text-gray-600">
                 <span>Subtotal</span>
-                <span className="font-medium">${cartTotal.toFixed(2)}</span>
+                <span className="font-medium">₹{total.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-gray-600">
                 <span>Shipping</span>
@@ -67,12 +88,16 @@ export default function CartClientPage() {
               </div>
               <div className="border-t pt-3 flex justify-between text-lg font-bold text-gray-900">
                 <span>Total</span>
-                <span className="text-blue-600">${cartTotal.toFixed(2)}</span>
+                <span className="text-blue-600">₹{total.toFixed(2)}</span>
               </div>
             </div>
-            <button className="w-full bg-blue-600 text-white px-6 py-4 rounded-xl font-semibold hover:bg-blue-700 transition-colors mb-3">
-              Proceed to Checkout
-            </button>
+            <Link 
+            href={'/checkoutpage'}
+            >
+             <button className="w-full bg-blue-600 text-white px-6 py-4 rounded-xl font-semibold hover:bg-blue-700 transition-colors mb-3">
+               Proceed to Checkout
+             </button>
+            </Link>
             <Link href="/" className="w-full block text-center bg-gray-100 text-gray-900 px-6 py-3 rounded-xl font-medium hover:bg-gray-200 transition-colors">
               Continue Shopping
             </Link>

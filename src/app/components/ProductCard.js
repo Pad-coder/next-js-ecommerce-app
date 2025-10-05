@@ -1,4 +1,3 @@
-// app/components/ProductCard.js
 'use client';
 
 import Link from 'next/link';
@@ -12,7 +11,7 @@ export default function ProductCard({ product }) {
       <Link href={`/products/${product.id}`}>
         <div className="relative h-64 bg-gray-100 overflow-hidden">
           <img
-            src={product.image}
+            src={product.image ? product.image : product.images[0]}
             alt={product.name}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
@@ -23,17 +22,17 @@ export default function ProductCard({ product }) {
       </Link>
       <div className="p-6">
         <h3 className="text-xl font-semibold text-gray-900 mb-2">{product.name}</h3>
-        <p className="text-2xl font-bold text-blue-600 mb-4">${product.price.toFixed(2)}</p>
-        <div className="flex gap-3">
-          <Link href={`/products/${product.id}`} className="flex-1 text-center bg-gray-100 text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors">
+        <p className="text-2xl font-bold text-blue-600 mb-4">₹{product.price.toFixed(2)}</p>
+        <div className="flex flex-col ">
+          <Link href={`/products/${product.id}`} className=" text-center bg-gray-100 text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors">
             View Details
           </Link>
-          <button
+          {<button
             onClick={() => addToCart(product)}
-            className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+            className=" bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
           >
             Add to Cart
-          </button>
+          </button>}
         </div>
       </div>
     </div>
