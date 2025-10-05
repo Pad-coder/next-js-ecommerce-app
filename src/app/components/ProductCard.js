@@ -20,9 +20,11 @@ export default function ProductCard({ product }) {
           </span>
         </div>
       </Link>
-      <div className="p-6">
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">{product.name}</h3>
-        <p className="text-2xl font-bold text-blue-600 mb-4">₹{product.price.toFixed(2)}</p>
+      <div className="p-6 grid-rows-2  ">
+        <div>
+          <h3 className="text-md font-semibold text-gray-900 mb-2">{product.name}</h3>
+        <p className="text-lg font-bold text-blue-600 mb-4">₹{product.price.toFixed(2)}</p>
+        </div>
         <div className="flex flex-col ">
           <Link href={`/products/${product.id}`} className=" text-center bg-gray-100 text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors">
             View Details
