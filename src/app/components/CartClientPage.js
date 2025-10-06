@@ -1,33 +1,11 @@
 'use client';
-import { useEffect, useState } from 'react';
 import { useCart } from '../context/CartContext';
 import Link from 'next/link';
 import { ShoppingCart, Minus, Plus, Trash2 } from 'lucide-react';
 
 export default function CartClientPage() {
-  const { cart, removeFromCart, updateQuantity } = useCart();
+  const { cart, removeFromCart, updateQuantity, total } = useCart();
 
-  const [total, setTotal] = useState(0);
-
-  useEffect(() => {
-    if (cart.length === 0) return;
-
-    const fetchTotal = async () => {
-      try {
-        const res = await fetch('/api/cart/cartTotal');
-        const data = await res.json();
-        if (data.success) {
-          setTotal(data.total);
-        } else {
-          console.error('Failed to fetch total');
-        }
-      } catch (err) {
-        console.error('Error fetching total:', err);
-      }
-    };
-
-    fetchTotal();
-  }, [cart]);
 
   if (cart.length === 0) {
     return (

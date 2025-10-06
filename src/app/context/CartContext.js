@@ -36,11 +36,11 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  const removeFromCart = async (productId) => {
+  const removeFromCart = async (product) => {
     try {
       const res = await fetch("/api/cart", {
         method: "DELETE",
-        body: JSON.stringify({ productId }),
+        body: JSON.stringify({ product }),
       });
       const data = await res.json();
       setCart(data)
@@ -83,15 +83,16 @@ export const CartProvider = ({ children }) => {
   }
 
   const totalItem = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const value = {
     cart,
+    totalItem,
+    total,
     addToCart,
     removeFromCart,
     updateQuantity,
     clearCart,
-    totalItem
-
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

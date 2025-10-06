@@ -7,6 +7,7 @@ import AddToCartButton from '@/app/components/AddToCartButton';
 export default function ProductDetailPage({ params }) {
 
   const [product, setProduct] = useState('')
+  
 
   useEffect(() => {
     if (!params?.id) return;
@@ -15,9 +16,7 @@ export default function ProductDetailPage({ params }) {
       .then(res => res.json())
       .then(data => setProduct(data))
       .catch(err => console.error("Error fetching product:", err));
-  }, [params.id]);
-
-
+    }, [params.id]);
 
   if (!product) {
     return (

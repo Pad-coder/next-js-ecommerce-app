@@ -51,13 +51,13 @@ export async function POST(req) {
 export async function DELETE(req) {
   try {
     const body = await req.json();
-    const { productId } = body;
+    const { product } = body;
 
-    if (!productId) {
+    if (!product) {
       return Response.json({ error: "Product ID is required" }, { status: 400 });
     }
 
-    const index = CART.findIndex(item => item.id === productId);
+    const index = CART.findIndex(item => item.id === product);
     if (index !== -1) {
       CART.splice(index, 1);  
     } else {

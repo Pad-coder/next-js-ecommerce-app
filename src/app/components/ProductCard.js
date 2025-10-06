@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { useCart } from '../context/CartContext';
 
 export default function ProductCard({ product }) {
-  const { addToCart } = useCart();
-
+  const { cart , addToCart, removeFromCart } = useCart();
+  
   return (
     <div className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow overflow-hidden group">
       <Link href={`/products/${product.id}`}>
@@ -29,9 +29,14 @@ export default function ProductCard({ product }) {
           <Link href={`/products/${product.id}`} className=" text-center bg-gray-100 text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors">
             View Details
           </Link>
-          {<button
+          {cart.find(item=> item.id === product.id) ?<button
+            onClick={() => removeFromCart(product.id)}
+            className=" bg-blue-700 text-white px-4 py-2 rounded-lg font-medium  transition-colors"
+          >
+            Remove
+          </button> : <button
             onClick={() => addToCart(product)}
-            className=" bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+            className=" bg-green-600  text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
           >
             Add to Cart
           </button>}
