@@ -30,12 +30,12 @@ export default function CartClientPage() {
           {cart.map(item => (
             <div key={item.id} className="bg-white rounded-xl shadow-sm p-6 flex flex-col md:flex-row gap-2 md:gap-6">
               <img src={item.image ? item.image : item.images[0]} alt={item.name} className="w-24 h-24 object-cover rounded-lg" />
-              <div className="flex-1 ">
+              <div className="md:flex-1 ">
                 <h3 className="text-lg font-semibold text-gray-900 mb-1">{item.name}</h3>
                 <p className="text-gray-500 text-sm mb-3">{item.category}</p>
                 <p className="text-xl font-bold text-blue-600">₹{item.price.toFixed(2)}</p>
               </div>
-              <div className="flex flex-row-reverse md:flex-col items-end mr-5 justify-between">
+              <div className="flex flex-row-reverse  md:flex-col md:items-end mr-5 justify-between">
                 <button onClick={() => removeFromCart(item.id)} className="text-red-500 hover:text-red-700 transition-colors">
                   <Trash2 className="w-5 h-5" />
                 </button>
