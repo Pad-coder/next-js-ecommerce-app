@@ -23,7 +23,7 @@ export default function ProductCard({ product }) {
       <div className="p-6 grid-rows-2  ">
         <div>
           <h3 className="text-md font-semibold text-gray-900 mb-2">{product.name}</h3>
-        <p className="text-lg font-bold text-blue-600 mb-4">₹{product.price.toFixed(2)}</p>
+        <div className='flex justify-between gap-2'><p className="text-lg font-bold text-blue-600 mb-4">₹{Math.trunc(product.price)}</p> {["meats", "vegetables", "fruits"].includes(product.category) && <span className='text-[12px]'>(*Per Kg)</span>}</div>
         </div>
         <div className="flex flex-col ">
           <Link href={`/products/${product.id}`} className=" text-center bg-gray-100 text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors">

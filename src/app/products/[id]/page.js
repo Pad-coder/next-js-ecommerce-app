@@ -44,7 +44,7 @@ export default function ProductDetailPage({ params }) {
             {product.category}
           </span>
           <h1 className="text-4xl font-bold text-gray-900 mb-4">{product.name}</h1>
-          <p className="text-3xl font-bold text-blue-600 mb-6">₹{product.price.toFixed(2)}</p>
+          <p className="text-3xl font-bold text-blue-600 mb-6">₹{product.price.toFixed(2)}</p> {["meats", "vegetables", "fruits"].includes(product.category) && <span className='text-[12px]'>(*Per Kg)</span>}
           <div className="mb-8">
             <h2 className="text-lg font-semibold text-gray-900 mb-2">Description</h2>
             <p className="text-gray-600 leading-relaxed">{product.description}</p>

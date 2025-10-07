@@ -1,16 +1,9 @@
 'use client'
-import { useEffect, useState } from 'react';
 import ProductCard from './components/ProductCard';
-import { data } from 'autoprefixer';
+import { useProduct } from './context/ProductContext';
 
 export default  function HomePage() {
-  const [products,setProducts] = useState([])
-  
-
-useEffect(()=>{
- fetch('/api/products/allProducts').then((res)=> res.json())
- .then((data)=>setProducts(data))
-},[])
+  const {products} = useProduct()
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
