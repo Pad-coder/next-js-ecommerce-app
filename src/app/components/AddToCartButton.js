@@ -25,6 +25,7 @@ export default function AddToCartButton({ product }) {
       Add to Cart
     </button>
      }
+ 
      </>
   );
 }
