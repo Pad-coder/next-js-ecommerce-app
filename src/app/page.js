@@ -4,7 +4,7 @@ import ProductCard from './components/ProductCard';
 import { useProduct } from './context/ProductContext';
 
 export default  function HomePage() {
-  const {products} = useProduct()
+  const {products,loading} = useProduct()
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
@@ -25,6 +25,11 @@ export default  function HomePage() {
       if(currentPage < totalPages)
         setCurrentPage(currentPage + 1)
     }
+    if(loading){
+      return <div className='h-screen flex justify-center items-center'>
+          <span className="loading loading-dots loading-xl "></span>
+      </div>
+    }
   return (
    <>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -39,17 +44,53 @@ export default  function HomePage() {
       </div>
     </div>
 
-    <div className='w-fit flex mx-auto gap-5 mb-10'>
-     
-      <button className='btn' onClick={(()=>paginate(1))} > First </button>
-      <button className='btn' onClick={()=> previousPage()} disabled={currentPage === 1}> Previous </button>
-      {new Array(totalPages).fill(0).map((_,idx)=>{
-        return <button key={idx +1} onClick={()=>setCurrentPage(idx+1)} className={`w-10 h-10 rounded-3xl hover:bg-green-600 ${currentPage === idx +1 && "bg-green-600"}`}>{idx + 1}</button>
-      })}
-      <button className='btn' onClick={()=> nextPage()} disabled={currentPage === totalPages}> Next </button>
-      <button className='btn' onClick={(()=>paginate(totalPages))}> Last </button>
-    
-    </div>
+   <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4 md:gap-6 lg:gap-8 mb-10 w-full px-2">
+  
+  <button
+    className="btn text-[10px] sm:text-[12px] md:text-sm px-2 sm:px-3 md:px-4"
+    onClick={() => paginate(1)}
+  >
+    First
+  </button>
+
+  <button
+    className="btn text-[10px] sm:text-[12px] md:text-sm px-2 sm:px-3 md:px-4"
+    onClick={() => previousPage()}
+    disabled={currentPage === 1}
+  >
+    Previous
+  </button>
+
+  <div className="flex flex-wrap justify-center gap-1 sm:gap-2 md:gap-3">
+    {new Array(totalPages).fill(0).map((_, idx) => (
+      <button
+        key={idx + 1}
+        onClick={() => setCurrentPage(idx + 1)}
+        className={`w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full text-[12px] sm:text-sm font-medium 
+          hover:bg-green-600 transition-colors duration-200 
+          ${currentPage === idx + 1 ? "bg-green-600 text-white" : "bg-gray-200 text-gray-700"}`}
+      >
+        {idx + 1}
+      </button>
+    ))}
+  </div>
+
+  <button
+    className="btn text-[10px] sm:text-[12px] md:text-sm px-2 sm:px-3 md:px-4"
+    onClick={() => nextPage()}
+    disabled={currentPage === totalPages}
+  >
+    Next
+  </button>
+
+  <button
+    className="btn text-[10px] sm:text-[12px] md:text-sm px-2 sm:px-3 md:px-4"
+    onClick={() => paginate(totalPages)}
+  >
+    Last
+  </button>
+</div>
+
    </>
   );
 }

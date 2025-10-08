@@ -2,22 +2,39 @@
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 import AddToCartButton from '@/app/components/AddToCartButton';
 
-export default function ProductDetailPage({ params }) {
+export default function ProductDetailPage() {
 
   const [product, setProduct] = useState('')
-  
+  const [loading, setLoading] = useState(true)
+  const param = useParams();
+   const { id } = param;
 
   useEffect(() => {
-    if (!params?.id) return;
-
-    fetch(`/api/products/productbyId/${params.id}`)
+    if (!id) return 
+   
+    fetch(`/api/products/productbyId/${id}`)
       .then(res => res.json())
-      .then(data => setProduct(data))
+      .then(data => {
+        setProduct(data)
+        setLoading(false)
+      })
       .catch(err => console.error("Error fetching product:", err));
-    }, [params.id]);
-
+    }, [id]);
+  
+  if(loading) {
+    setTimeout(()=> setLoading(false),5000)
+    return <>
+    {
+      <div className='h-screen flex justify-center items-center'>
+          <span className="loading loading-dots loading-xl "></span>
+      </div>
+    }
+    </>
+  }
+  
   if (!product) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
