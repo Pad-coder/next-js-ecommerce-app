@@ -1,7 +1,7 @@
 'use client';
 import { useCart } from '../context/CartContext';
-import { ShoppingCart } from 'lucide-react';
-
+import { ShoppingCart, ChevronRight} from 'lucide-react';
+import Link from 'next/link';
 export default function AddToCartButton({ product }) {
   const {cart, addToCart, removeFromCart } = useCart();
 
@@ -9,13 +9,16 @@ export default function AddToCartButton({ product }) {
   return (
      <>
      {cart.find(item => item.id === product.id) ? 
-      <button
+      <div className='flex flex-col items-end'>
+        <button
       onClick={() => removeFromCart(product.id)}
       className="w-full bg-blue-600 text-white px-8 py-4 rounded-xl font-semibold text-lg  transition-colors flex items-center justify-center gap-2"
     >
       <ShoppingCart className="w-5 h-5" />
       Remove
     </button>
+ <Link href="/cart" className='text-lg underline flex items-center gap-2'>Go To Cart <ChevronRight className="w-5 h-5" /> </Link>
+      </div>
     : 
     <button
       onClick={() => addToCart(product)}
@@ -23,6 +26,7 @@ export default function AddToCartButton({ product }) {
     >
       <ShoppingCart className="w-5 h-5" />
       Add to Cart
+      
     </button>
      }
  

@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useCart } from '../context/CartContext';
+import { ChevronRight} from 'lucide-react';
 
 export default function ProductCard({ product }) {
   const { cart , addToCart, removeFromCart } = useCart();
@@ -25,8 +26,8 @@ export default function ProductCard({ product }) {
           <h3 className="text-md font-semibold text-gray-900 mb-2">{product.name}</h3>
         <div className='flex justify-between gap-2'><p className="text-lg font-bold text-blue-600 mb-4">₹{Math.trunc(product.price)}</p> {["meats", "vegetables", "fruits"].includes(product.category) && <span className='text-[12px]'>(*Per Kg)</span>}</div>
         </div>
-        <div className="flex flex-col ">
-          <Link href={`/products/${product.id}`} className=" text-center bg-gray-100 text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors">
+        <div className="flex flex-col justify-center gap-2">
+          <Link href={`/products/${product.id}`} className="btn text-center bg-gray-100 text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors">
             View Details
           </Link>
           {cart.find(item=> item.id === product.id) ?<button
@@ -40,6 +41,11 @@ export default function ProductCard({ product }) {
           >
             Add to Cart
           </button>}
+          { cart.find(item=> item.id === product.id) && <button className='self-end'><Link href='/cart' className='flex items-center'>
+            Go to cart <ChevronRight className="w-5 h-5" />
+          </Link></button>
+
+          }
         </div>
       </div>
     </div>
