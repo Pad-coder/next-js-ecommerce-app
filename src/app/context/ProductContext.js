@@ -9,7 +9,7 @@ export const useProduct = () => useContext(ProductContext);
 export const ProductProvider = ({ children }) => {
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(true)
-
+    const [filteredProducts, setFilteredProducts] = useState([])
 useEffect(()=>{
 const fetchProduct = async ()=>{
      const res = await fetch('/api/products/allProducts')
@@ -21,8 +21,18 @@ const fetchProduct = async ()=>{
 fetchProduct()
 },[])
 
+const filterProducts = (category) => {
+    if (category === 'all') {
+        setFilteredProducts(products);
+        return;
+    }
+    const filtered = products.filter((product) => product.category.toLowerCase() === category.toLowerCase());
+    setFilteredProducts(filtered);
+}
 const value = {
     products,
+    filterProducts,
+    filteredProducts,
     loading
 }
 return <ProductContext.Provider value={value} >{children}</ProductContext.Provider>

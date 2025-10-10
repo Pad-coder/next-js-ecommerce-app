@@ -2,9 +2,13 @@
 import React, { useState } from 'react'
 import { useCart } from '../context/CartContext';
 import { useRouter } from 'next/navigation';
+import {toast } from 'react-toastify';
+import {X} from 'lucide-react'
+
 function CheckOutPage() {
 
   const router = useRouter();
+  const [showAlert, setShowAlert] = useState(false);
 
   const [shippingDetails, setShippingDetails] = useState({
     fullName: '',
@@ -18,6 +22,27 @@ function CheckOutPage() {
   const { cart, clearCart } = useCart();
 
 
+
+  const handleConfirmOrder = async (e) => {
+    e.preventDefault();
+    await clearCart()
+    toast.success('Order Placed Successfully');
+    setShowAlert(false);
+    router.push('/');
+  };
+
+  const CustomAlert = ({ onClose }) => {
+    return (
+      <div className='fixed w-100 h-50 flex justify-center items-center flex-col gap-4 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-5 border border-gray-300 rounded-lg shadow-lg z-[1000]'>
+        <X className='cursor-pointer self-end text-red-500 ' onClick={()=> setShowAlert(false)}/>
+        <p className='font-medium text-xl '>Kindly Confirm Your Order</p>
+        <button onClick={onClose} className='btn bg-neutral-300'>Confirm</button>
+      </div>
+    );
+  };
+
+
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setShippingDetails({ ...shippingDetails, [name]: value });
@@ -29,14 +54,12 @@ function CheckOutPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await clearCart()
-    router.push('/');
-    alert('Order placed successfully!');
+    setShowAlert(true);
   };
   return (
-    <div className='flex flex-col-reverse lg:flex-row p-5 max-w-3xl mx-auto'>
-
-      <div className='md:flex-1 '>
+    <div className={`flex flex-col-reverse lg:flex-row p-5 max-w-3xl mx-auto `}>
+{/* ${showAlert ? 'blur-sm pointer-events-none select-none' : ''} */}
+      <div className={`md:flex-1 ${showAlert ? 'blur-sm pointer-events-none select-none' : ''} `}>
         <form
           onSubmit={handleSubmit}
           className='p-5 mt-5 lg:mt-0 lg:mr-5 lg:p-5 border-1 border-gray-300 rounded'
@@ -148,7 +171,7 @@ function CheckOutPage() {
 
       </div>
       <div
-        className='flex-1 p-5 border border-gray-300 rounded-lg bg-gray-50'
+        className={`flex-1 p-5 border border-gray-300 rounded-lg bg-gray-50 ${showAlert ? 'blur-sm pointer-events-none select-none' : ''} `}
       >
         <h2 className='text-xl'>Cart Details</h2>
         {cart.map((item) => (
@@ -171,6 +194,7 @@ function CheckOutPage() {
           <span>₹{calculateTotal()}</span>
         </div>
       </div>
+      {showAlert && <CustomAlert onClose={handleConfirmOrder} />}
     </div>
   )
 }

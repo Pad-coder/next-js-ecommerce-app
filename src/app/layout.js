@@ -3,6 +3,7 @@ import './globals.css';
 import { Poppins } from 'next/font/google';
 import { CartProvider } from './context/CartContext';
 import { ProductProvider } from './context/ProductContext';
+import {ToastContainer} from 'react-toastify';
 import Header from './components/Header';
 
 const poppins = Poppins({ 
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
             <Header />
             <main>{children}</main>
           </div>
+          <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light"/>
         </CartProvider>
        </ProductProvider>
       </body>
