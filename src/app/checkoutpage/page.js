@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react'
+import Link from 'next/link';
 import { useCart } from '../context/CartContext';
 import { useRouter } from 'next/navigation';
 import {toast } from 'react-toastify';
@@ -9,7 +10,7 @@ function CheckOutPage() {
 
   const router = useRouter();
   const [showAlert, setShowAlert] = useState(false);
-
+  const [showButton, setShowButton] = useState(false);
   const [shippingDetails, setShippingDetails] = useState({
     fullName: '',
     address: '',
@@ -31,7 +32,7 @@ function CheckOutPage() {
     router.push('/');
   };
 
-  const CustomAlert = ({ onClose }) => {
+  const CheckOutAlert = ({ onClose }) => {
     return (
       <div className='fixed w-100 h-50 flex justify-center items-center flex-col gap-4 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-5 border border-gray-300 rounded-lg shadow-lg z-[1000]'>
         <X className='cursor-pointer self-end text-red-500 ' onClick={()=> setShowAlert(false)}/>
@@ -40,6 +41,16 @@ function CheckOutPage() {
       </div>
     );
   };
+
+  const EmptyCartAlert = () => {
+    return(
+      <div className='fixed w-100 h-50 flex justify-center items-center flex-col gap-4 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-5 border border-gray-300 rounded-lg shadow-lg z-[1000]'>
+    <X className='cursor-pointer self-end text-red-500 ' onClick={()=> setShowButton(false)}/>
+    <p className='font-medium text-xl text-gray-950 '>Your cart is empty! Please add items to proceed.</p>
+    <Link href='/' className='btn bg-neutral-300 hover:bg-neutral-400 text-gray-950'>Browse Products</Link>   
+</div>
+    )
+  }
 
 
 
@@ -54,6 +65,12 @@ function CheckOutPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(calculateTotal() == 0 ){
+      setShowButton(true);
+      toast.error('Your cart is empty! Please add items to proceed.');
+      return;
+      
+    }
     setShowAlert(true);
   };
 
@@ -174,8 +191,10 @@ function CheckOutPage() {
     </div>
   </div>
 
-  {showAlert && <CustomAlert onClose={handleConfirmOrder} />}
-</div>
+  {showAlert && <CheckOutAlert onClose={handleConfirmOrder} />}
+  {showButton && <EmptyCartAlert />
+}
+  </div>
 
   )
 }
