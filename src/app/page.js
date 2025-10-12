@@ -72,10 +72,10 @@ export default  function HomePage() {
       </div>
     </div>
 
-   <div className={`flex flex-wrap justify-center items-center gap-2 sm:gap-4 md:gap-6 lg:gap-8 mb-10 w-full px-2 `}>
+   <div className={`flex flex-wrap justify-center items-center gap-2 sm:gap-4 md:gap-6 lg:gap-8 mb-10  w-full px-2 `}>
   {/* ${(category === 'all' && currentItems.length < 9 && products.length >= 8 ) || (category !== 'all' && currentItems.length < 9 && filteredProducts.length >= 8 ) ? '' : 'hidden'} */}
   <button
-    className="btn text-[10px] sm:text-[12px] md:text-sm px-2 sm:px-3 md:px-4"
+    className="btn  text-[10px] sm:text-[12px] md:text-sm px-2 sm:px-3 md:px-4"
     onClick={() => paginate(1)}
   >
     First

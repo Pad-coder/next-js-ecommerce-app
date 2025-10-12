@@ -41,11 +41,11 @@ export default function ProductCard({ product }) {
           >
             Add to Cart
           </button>}
-          { cart.find(item=> item.id === product.id) && <button className='self-end'><Link href='/cart' className='flex items-center'>
+          { cart.find(item=> item.id === product.id) && <button className='self-end'>
+            <Link href='/cart' className='flex items-center text-gray-950'>
             Go to cart <ChevronRight className="w-5 h-5" />
-          </Link></button>
-
-          }
+          </Link>
+          </button> }
         </div>
       </div>
     </div>

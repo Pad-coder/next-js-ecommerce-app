@@ -20,11 +20,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={poppins.variable}>
+    <html lang="en" className='bg-gray-50'>
+      <body className={poppins.variable }>
        <ProductProvider>
          <CartProvider>
-          <div className="min-h-screen bg-gray-50">
+          <div className="min-h-screen ">
             <Header />
             <main>{children}</main>
           </div>
