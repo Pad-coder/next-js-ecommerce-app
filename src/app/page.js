@@ -5,7 +5,7 @@ import { useProduct } from './context/ProductContext';
 
 export default  function HomePage() {
   const {products,filterProducts, filteredProducts,loading} = useProduct()
-  const [category, setCategory] = useState('all')
+  const [category, setCategory] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
 
@@ -51,9 +51,10 @@ export default  function HomePage() {
              text-gray-700 bg-white shadow-sm focus:outline-none focus:ring-2 
              focus:ring-blue-500 focus:border-blue-500 transition duration-200
              hover:shadow-md cursor-pointer"
+  
   onChange={(e) => handleCategoryChange(e)}
 >
-  <option value="all" className="text-gray-600">All</option>
+  <option value="all"  className="text-gray-600">All</option>
   {products
     .map(product => product.category)
     .filter((value, index, self) => self.indexOf(value) === index)

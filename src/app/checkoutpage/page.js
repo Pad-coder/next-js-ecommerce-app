@@ -1,10 +1,11 @@
 'use client';
 import React, { useState } from 'react'
+import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { useCart } from '../context/CartContext';
 import { useRouter } from 'next/navigation';
-import {toast } from 'react-toastify';
-import {X} from 'lucide-react'
+import { toast } from 'react-toastify';
+import { X } from 'lucide-react'
 
 function CheckOutPage() {
 
@@ -22,7 +23,9 @@ function CheckOutPage() {
   });
   const { cart, clearCart } = useCart();
 
-
+  if (typeof window === 'undefined') {
+    return redirect('/cart');
+  }
 
   const handleConfirmOrder = async (e) => {
     e.preventDefault();

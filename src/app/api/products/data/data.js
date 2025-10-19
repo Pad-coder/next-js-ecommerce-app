@@ -1448,7 +1448,7 @@ export const PRODUCTS = [
       "id": 25,
       "name": "Green Bell Pepper",
       "description": "Fresh and vibrant green bell pepper, perfect for adding color and flavor to your dishes.",
-      "category": "groceries",
+      "category": "vegetables",
       "price": 190.29,
       "discountPercentage": 0.16,
       "rating": 3.25,

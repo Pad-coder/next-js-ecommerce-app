@@ -69,6 +69,7 @@ export default function ProductDetailPage() {
 
           <AddToCartButton product={product} />
         </div>
+        
       </div>
       <div>
 
